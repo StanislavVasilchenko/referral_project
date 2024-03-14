@@ -7,6 +7,7 @@ from users.models import NULLABLE
 class ReferralCode(models.Model):
     name = models.CharField(max_length=255, verbose_name="code_name")
     description = models.TextField(verbose_name="description")
+    code = models.CharField(max_length=20, verbose_name="code", **NULLABLE)
     date_created = models.DateField(auto_now_add=True, verbose_name="date created")
     lifetime = models.PositiveSmallIntegerField(default=1, verbose_name="lifetime")
     user_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="owner")
