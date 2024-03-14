@@ -7,3 +7,9 @@ class ReferralSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReferralCode
         exclude = ['id', 'user_owner']
+
+
+class ReferralCodeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ReferralCode
+        fields = ('code',)
