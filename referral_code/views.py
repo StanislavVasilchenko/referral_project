@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from referral_code.models import ReferralCode
+from referral_code.permissions import IsReferralCodeOwner
 from referral_code.serializers import ReferralSerializer
 
 
@@ -21,3 +22,9 @@ class ReferralCodeCreateAPIView(generics.CreateAPIView):
             ref_code.save()
             return Response(self.serializer_class(ref_code).data, status=status.HTTP_201_CREATED)
         return Response({'message': 'You have active code'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ReferralCodeDelete(generics.DestroyAPIView):
+    queryset = ReferralCode.objects.all()
+    serializer_class = ReferralSerializer
+    permission_classes = [IsAuthenticated, IsReferralCodeOwner]
