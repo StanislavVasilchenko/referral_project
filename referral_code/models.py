@@ -8,8 +8,8 @@ class ReferralCode(models.Model):
     name = models.CharField(max_length=255, verbose_name="code_name")
     description = models.TextField(verbose_name="description")
     date_created = models.DateField(auto_now_add=True, verbose_name="date created")
-    lifetime = models.PositiveSmallIntegerField(default=1, verbose_name="lifetime")  # время жизни кода
-    user_owner = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="owner")
+    lifetime = models.PositiveSmallIntegerField(default=1, verbose_name="lifetime")
+    user_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="owner")
 
     user_subscriber = models.ForeignKey(settings.AUTH_USER_MODEL,
                                         on_delete=models.SET_DEFAULT,
