@@ -11,6 +11,7 @@ from users.models import User
 
 
 class ReferralCodeCreateAPIView(generics.CreateAPIView):
+    """Create a new referral code"""
     queryset = ReferralCode.objects.all()
     serializer_class = ReferralSerializer
     permission_classes = [IsAuthenticated]
@@ -35,6 +36,7 @@ class ReferralCodeDelete(generics.DestroyAPIView):
 
 
 class ReferralCodeGetAPIView(APIView):
+    """Get active referral codes for a given user email"""
     queryset = ReferralCode.objects.all()
     serializer_class = ReferralCodeSerializer
     permission_classes = [IsAuthenticated]
@@ -43,7 +45,11 @@ class ReferralCodeGetAPIView(APIView):
         email = request.data.get('email')
         try:
             user = User.objects.get(email=email)
-            code = ReferralCode.objects.get(user_owner=user, is_active=True)
+
+            try:
+                code = ReferralCode.objects.get(user_owner=user, is_active=True)
+            except ReferralCode.DoesNotExist:
+                return Response('Code not found', status=status.HTTP_404_NOT_FOUND)
             serializer = ReferralCodeSerializer(code)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except User.DoesNotExist:
