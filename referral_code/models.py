@@ -11,12 +11,6 @@ class ReferralCode(models.Model):
     date_created = models.DateField(auto_now_add=True, verbose_name="date created")
     lifetime = models.PositiveSmallIntegerField(default=1, verbose_name="lifetime")
     user_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="owner")
-
-    user_subscriber = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                        on_delete=models.SET_DEFAULT,
-                                        default=None,
-                                        related_name="subscriber",
-                                        **NULLABLE)
     is_active = models.BooleanField(default=True, verbose_name="active")
 
     def __str__(self):
