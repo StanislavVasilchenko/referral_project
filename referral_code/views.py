@@ -79,4 +79,3 @@ def subscribe(request, *args, **kwargs):
         user.subscriber = code.user_owner
         user.save()
         return Response({'message': f"Subscribed to referral code {code.name}"}, status=status.HTTP_200_OK)
-
